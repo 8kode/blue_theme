@@ -1,0 +1,20 @@
+import "./global_fun"
+
+import "./libs/jquery.plugin.js"
+import "./libs/jquery.calendars.js"
+import "./libs/jquery.calendars-ar.js"
+import "./libs/jquery.calendars.all.js"
+import "./libs/jquery.calendars.plus.js"
+import "./libs/jquery.calendars.picker.js"
+import "./libs/jquery.calendars.picker-ar.js"
+import "./libs/jquery.calendars.islamic.js"
+import "./libs/jquery.calendars.islamic-ar.js"
+import "./libs/jquery.calendars.islamic-fa.js"
+import "./libs/jquery.calendars.ummalqura.js"
+import "./libs/jquery.calendars.ummalqura-ar.js"
+
+import "./frappe_hijri_datepicker" 
+import "./signature_custom" 
+
+import "./frappe_tinymce" 
+// import "./hijri_date" 

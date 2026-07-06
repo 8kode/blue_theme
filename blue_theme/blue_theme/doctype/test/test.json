@@ -1,0 +1,154 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2023-04-06 05:06:46.289720",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "phone_number",
+  "testa",
+  "naming_series",
+  "data",
+  "planning",
+  "planning_name",
+  "employee",
+  "employee_name",
+  "html",
+  "json",
+  "d",
+  "aaa",
+  "bbb",
+  "tab_2_tab",
+  "rrr"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Naming Series",
+   "options": "Test.-.YYYYi.-.MMi.-.DDi.-.##########",
+   "reqd": 1
+  },
+  {
+   "fieldname": "data",
+   "fieldtype": "Data",
+   "label": "data"
+  },
+  {
+   "fieldname": "html",
+   "fieldtype": "HTML",
+   "label": "html",
+   "options": "\n{% for dd in doc.ct %}\n<div class=\"frappe-control\" data-fieldname=\"{{dd.department}}\" data-fieldtype=\"Text\" title=\"{{dd.department}}\">\n\t<div class=\"form-group\">\n\t\t<div class=\"clearfix\">\n\t\t\t<label class=\"control-label\" style=\"padding-right: 0px;\">{{dd.department}}</label>\n\t\t\t<span class=\"help\"></span>\n\t\t</div>\n\t\t<div class=\"control-input-wrapper\">\n\t\t\t<div class=\"control-input\"><textarea autocomplete=\"off\" class=\"input-with-feedback form-control\" data-doctype=\"test\" data-fieldname=\"{{dd.department}}\" data-fieldtype=\"Text\" style=\"height: 300px;\" type=\"text\">{{dd.department}}</textarea></div>\n\t\t\t<div class=\"control-value like-disabled-input for-description\" style=\"display: none;\"></div>\n\t\t\t<p class=\"help-box small text-muted\"></p>\n\t\t</div>\n\t</div>\n</div>\n\n{% endfor %}"
+  },
+  {
+   "fieldname": "json",
+   "fieldtype": "JSON",
+   "label": "json"
+  },
+  {
+   "fieldname": "d",
+   "fieldtype": "Text",
+   "label": "d"
+  },
+  {
+   "fieldname": "phone_number",
+   "fieldtype": "Data",
+   "label": "phone_number",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "aaa",
+   "fieldtype": "Attach",
+   "label": "aaa",
+   "options": "{\"allowed_file_types\": [\"jpg\", \"png\", \"gif\"]}"
+  },
+  {
+   "fieldname": "bbb",
+   "fieldtype": "Attach Image",
+   "label": "bbb",
+   "options": "{\"allowed_file_types\": [\"jpg\", \"png\", \"gif\"],\"allow_multiple\":true}"
+  },
+  {
+   "fieldname": "tab_2_tab",
+   "fieldtype": "Tab Break",
+   "label": "Tab 2"
+  },
+  {
+   "fieldname": "rrr",
+   "fieldtype": "Text Editor",
+   "label": "Rrr"
+  },
+  {
+   "fieldname": "planning",
+   "fieldtype": "Link",
+   "label": "planning",
+   "options": "Strategy Plan"
+  },
+  {
+   "fetch_from": "planning.planning_name",
+   "fieldname": "planning_name",
+   "fieldtype": "Data",
+   "label": "planning name"
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Employee",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "employee.employee_name",
+   "fieldname": "employee_name",
+   "fieldtype": "Read Only",
+   "label": "Employee Name"
+  },
+  {
+   "fieldname": "testa",
+   "fieldtype": "Autocomplete",
+   "label": "Testa",
+   "options": "test"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-03-03 18:32:39.052266",
+ "modified_by": "Administrator",
+ "module": "Blue Theme",
+ "name": "test",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "nvis user",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
