@@ -1,0 +1,691 @@
+/* ============================================================================
+ * FRAPPE / ERPNEXT v16 — CORPORATE THEME
+ * Target: Frappe Framework v16.29 / ERPNext v16.30
+ * Scope:  :root  +  [data-theme="dark"]  +  [dir="rtl"]
+ * Rules:  No Less, no Python, no Core file edits. Pure CSS Custom Properties
+ *         plus component-level overrides in ascending specificity order.
+ * Browsers: Chrome 110+ / Firefox 115+ / Edge 110+
+ * Base hue: 214deg (+/- 2deg) across the whole corporate palette.
+ * ==========================================================================*/
+
+/* ---------------------------------------------------------------------------
+ * 00. FONTS — loaded before any rule so Arabic + Latin resolve on first paint.
+ * -------------------------------------------------------------------------*/
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Tajawal:wght@400;500;700&family=Noto+Kufi+Arabic:wght@400;500;700&display=swap");
+
+/* ---------------------------------------------------------------------------
+ * 01. SEMANTIC LAYER — new --ft-* tokens sit ON TOP of Frappe's variables so
+ *     rebranding means editing this block only.
+ * -------------------------------------------------------------------------*/
+:root {
+  /* Brand — Primary (hue 214) */
+  --ft-primary: #0f4080;         /* hsl(214 79% 28%) */
+  --ft-primary-hover: #0c3264;   /* hsl(214 79% 22%) */
+  --ft-primary-light: #e8f1fc;   /* hsl(214 79% 95%) */
+  --ft-primary-fg: #ffffff;
+
+  /* Brand — Secondary (hue 212) */
+  --ft-secondary: #3b689b;
+  --ft-secondary-hover: #30547e;
+  --ft-secondary-light: #e9eff7;
+  --ft-secondary-fg: #ffffff;
+
+  /* Status — background + text pairs */
+  --ft-success: #1e7d46;  --ft-success-bg: #e6f4ec;  --ft-success-text: #145c33;
+  --ft-warning: #9a6206;  --ft-warning-bg: #fdf3e2;  --ft-warning-text: #7a4e04;
+  --ft-danger:  #b3261e;  --ft-danger-bg:  #fbeae9;  --ft-danger-text:  #8c1d18;
+  --ft-info:    #1362a8;  --ft-info-bg:    #e8f1fc;  --ft-info-text:    #0f4c86;
+  --ft-appreciation: #146c43; --ft-appreciation-bg: #e7f5ec; --ft-appreciation-text: #0f5132;
+  --ft-criticism:    #a02334; --ft-criticism-bg:    #fceaec; --ft-criticism-text:    #7e1c29;
+
+  /* Neutrals — 10 corporate greys, hue 214, low saturation */
+  --ft-n-0:   #ffffff;
+  --ft-n-50:  #f7f9fb;
+  --ft-n-100: #eef2f6;
+  --ft-n-200: #dfe5ec;
+  --ft-n-300: #c7d0da;
+  --ft-n-400: #9aa7b5;
+  --ft-n-500: #6b7a8b;
+  --ft-n-600: #4e5c6b;
+  --ft-n-700: #3a4653;
+  --ft-n-800: #26303a;
+  --ft-n-900: #161d24;
+  --ft-n-950: #0d1319;
+
+  /* Canvas / surface hierarchy */
+  --ft-bg-canvas: var(--ft-n-50);
+  --ft-bg-surface: var(--ft-n-0);
+  --ft-bg-raised: var(--ft-n-0);
+  --ft-bg-sunken: var(--ft-n-100);
+  --ft-border: var(--ft-n-200);
+  --ft-border-strong: var(--ft-n-300);
+
+  /* Elevation */
+  --ft-shadow-xs: 0 1px 2px rgba(13, 19, 25, 0.05);
+  --ft-shadow-sm: 0 1px 3px rgba(13, 19, 25, 0.08), 0 1px 2px rgba(13, 19, 25, 0.04);
+  --ft-shadow-md: 0 6px 16px rgba(13, 19, 25, 0.1), 0 2px 4px rgba(13, 19, 25, 0.06);
+  --ft-shadow-lg: 0 16px 40px rgba(13, 19, 25, 0.16);
+  --ft-ring: 0 0 0 3px rgba(15, 64, 128, 0.22);
+
+  /* Type */
+  --ft-font-latin: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --ft-font-arabic: "Tajawal", "Noto Kufi Arabic", "Segoe UI", sans-serif;
+  --ft-radius: 8px;
+  --ft-radius-sm: 6px;
+  --ft-radius-lg: 12px;
+}
+
+/* ---------------------------------------------------------------------------
+ * 02. GLOBAL RESET & ROOT VARIABLE MAPPING — bind Frappe's variables to --ft-*.
+ *     NOTE: --navbar-height, --page-head-height, --btn-height, --input-height,
+ *     --list-row-height, --neutral, --invert-neutral are deliberately NOT set.
+ * -------------------------------------------------------------------------*/
+:root {
+  /* --primary is consumed inside rgba(var(--primary), a) → RGB triplet ONLY. */
+  --primary: 15, 64, 128;
+  --primary-color: var(--ft-primary);
+  --brand-color: var(--ft-primary);
+
+  /* Grey scale re-map (Frappe derives dozens of tokens from these) */
+  --gray-50: var(--ft-n-50);
+  --gray-100: var(--ft-n-100);
+  --gray-200: var(--ft-n-200);
+  --gray-300: var(--ft-n-300);
+  --gray-400: var(--ft-n-400);
+  --gray-500: var(--ft-n-500);
+  --gray-600: var(--ft-n-600);
+  --gray-700: var(--ft-n-700);
+  --gray-800: var(--ft-n-800);
+  --gray-900: var(--ft-n-900);
+
+  /* Surfaces */
+  --bg-color: var(--ft-bg-canvas);
+  --fg-color: var(--ft-bg-surface);
+  --card-bg: var(--ft-bg-raised);
+  --modal-bg: var(--ft-bg-raised);
+  --toast-bg: var(--ft-bg-raised);
+  --popover-bg: var(--ft-bg-raised);
+  --subtle-accent: var(--ft-n-50);
+  --subtle-fg: var(--ft-n-100);
+  --fg-hover-color: var(--ft-primary-light);
+  --control-bg: var(--ft-n-100);
+  --control-bg-on-gray: var(--ft-n-200);
+  --disabled-control-bg: var(--ft-n-100);
+  --awesomebar-focus-bg: var(--ft-bg-surface);
+  --awesomplete-hover-bg: var(--ft-primary-light);
+  --sidebar-select-color: var(--ft-primary-light);
+  --highlight-color: var(--ft-primary-light);
+  --yellow-highlight-color: var(--ft-warning-bg);
+  --placeholder-color: var(--ft-n-100);
+  --skeleton-bg: var(--ft-n-200);
+
+  /* Text */
+  --text-color: var(--ft-n-800);
+  --heading-color: var(--ft-n-900);
+  --text-neutral: var(--ft-n-700);
+  --text-muted: var(--ft-n-500);
+  --text-light: var(--ft-n-400);
+  --text-dark: var(--ft-n-900);
+  --text-on-primary: var(--ft-primary-fg);
+
+  /* Borders & icons */
+  --border-color: var(--ft-border);
+  --dark-border-color: var(--ft-border-strong);
+  --border-primary: var(--ft-primary);
+  --icon-stroke: var(--ft-n-600);
+  --icon-fill: transparent;
+  --icon-fill-bg: var(--ft-bg-surface);
+
+  /* Buttons */
+  --btn-primary: var(--ft-primary);
+  --btn-default-bg: var(--ft-n-100);
+  --btn-default-hover-bg: var(--ft-n-200);
+
+  /* Status / alerts */
+  --alert-text-danger: var(--ft-danger-text);
+  --alert-text-warning: var(--ft-warning-text);
+  --alert-text-info: var(--ft-info-text);
+  --alert-text-success: var(--ft-success-text);
+  --alert-bg-danger: var(--ft-danger-bg);
+  --alert-bg-warning: var(--ft-warning-bg);
+  --alert-bg-info: var(--ft-info-bg);
+  --alert-bg-success: var(--ft-success-bg);
+  --appreciation-color: var(--ft-appreciation);
+  --criticism-color: var(--ft-criticism);
+  --error-bg: var(--ft-danger-bg);
+  --error-border: var(--ft-danger);
+  --progress-bar-bg: var(--ft-primary);
+
+  /* Shadows */
+  --shadow-xs: var(--ft-shadow-xs);
+  --shadow-sm: var(--ft-shadow-sm);
+  --shadow-base: var(--ft-shadow-sm);
+  --shadow-md: var(--ft-shadow-md);
+  --shadow-lg: var(--ft-shadow-lg);
+  --card-shadow: var(--ft-shadow-sm);
+  --modal-shadow: var(--ft-shadow-lg);
+  --btn-shadow: var(--ft-shadow-xs);
+  --shadow-inset: inset 0 -1px 0 var(--ft-border);
+  --highlight-shadow: var(--ft-ring);
+  --checkbox-focus-shadow: var(--ft-ring);
+
+  /* Radii & rhythm (layout-critical heights untouched) */
+  --border-radius: var(--ft-radius-sm);
+  --border-radius-sm: var(--ft-radius-sm);
+  --border-radius-md: var(--ft-radius);
+  --border-radius-lg: var(--ft-radius-lg);
+  --card-border-radius: var(--ft-radius-lg);
+  --page-max-width: 1180px;
+}
+
+*,
+*::before,
+*::after { -webkit-font-smoothing: antialiased; }
+
+/* ---------------------------------------------------------------------------
+ * 03. TYPOGRAPHY — one type scale, tightened headings, tabular numerals.
+ * -------------------------------------------------------------------------*/
+body,
+.form-control,
+.btn,
+.input-with-feedback {
+  font-family: var(--ft-font-latin) !important;
+  letter-spacing: -0.005em;
+}
+h1, h2, h3, h4, h5, h6,
+.page-title, .page-title .title-text, .section-head, .form-section-heading {
+  font-family: var(--ft-font-latin) !important;
+  color: var(--heading-color) !important;
+  letter-spacing: -0.015em;
+  font-weight: 650;
+}
+.page-title .title-text { font-size: 1.15rem !important; }
+.text-muted, .small { color: var(--text-muted) !important; }
+td, .list-row-col, .dt-cell__content, .indicator-pill { font-variant-numeric: tabular-nums; }
+
+/* ---------------------------------------------------------------------------
+ * 04. NAVBAR — brand-tinted top bar with a contained search field.
+ * -------------------------------------------------------------------------*/
+.navbar {
+  background-color: var(--ft-primary) !important;
+  border-bottom: 1px solid var(--ft-primary-hover) !important;
+  box-shadow: var(--ft-shadow-sm);
+}
+.navbar .navbar-brand,
+.navbar .nav-link,
+.navbar .dropdown-toggle,
+.navbar .navbar-icon-container svg {
+  color: rgba(255, 255, 255, 0.92) !important;
+  stroke: rgba(255, 255, 255, 0.92) !important;
+}
+.navbar .nav-link:hover,
+.navbar .navbar-icon-container:hover { color: #fff !important; background: rgba(255, 255, 255, 0.12); border-radius: var(--ft-radius-sm); }
+.navbar .navbar-brand img, .navbar .app-logo { filter: brightness(0) invert(1); max-height: 22px; }
+.navbar .search-bar .awesomplete input,
+.navbar #navbar-search {
+  background: rgba(255, 255, 255, 0.14) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  color: #fff !important;
+  border-radius: var(--ft-radius);
+}
+.navbar .search-bar input::placeholder { color: rgba(255, 255, 255, 0.7) !important; }
+.navbar .search-bar input:focus {
+  background: #fff !important;
+  color: var(--ft-n-900) !important;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.28);
+}
+.navbar .navbar-nav .dropdown-menu { background: var(--popover-bg) !important; }
+
+/* ---------------------------------------------------------------------------
+ * 05. SIDEBAR — quiet surface, brand gradient on the active item.
+ * -------------------------------------------------------------------------*/
+.desk-sidebar, .layout-side-section, .sidebar-menu, .standard-sidebar {
+  background-color: var(--ft-bg-surface) !important;
+  border-right: 1px solid var(--border-color);
+}
+.desk-sidebar .sidebar-item-container .desk-sidebar-item,
+.standard-sidebar-item {
+  border-radius: var(--ft-radius);
+  color: var(--ft-n-700) !important;
+  font-weight: 500;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.desk-sidebar .desk-sidebar-item:hover,
+.standard-sidebar-item:hover { background-color: var(--ft-primary-light) !important; color: var(--ft-primary) !important; }
+.desk-sidebar .desk-sidebar-item.selected,
+.standard-sidebar-item.selected {
+  background: linear-gradient(90deg, var(--ft-primary) 0%, var(--ft-secondary) 100%) !important;
+  color: #fff !important;
+  box-shadow: var(--ft-shadow-sm);
+}
+.desk-sidebar .desk-sidebar-item.selected a,
+.desk-sidebar .desk-sidebar-item.selected svg { color: #fff !important; stroke: #fff !important; }
+.desk-sidebar .sidebar-item-icon svg, .standard-sidebar-item .icon { stroke: var(--icon-stroke); }
+.sidebar-toggle-btn, .sidebar-toggle-placeholder { color: var(--ft-n-600) !important; }
+.layout-side-section.hidden + .layout-main-section-wrapper { transition: margin 0.2s ease; }
+
+/* ---------------------------------------------------------------------------
+ * 06. CARDS & WIDGETS — flat borders, soft lift on hover.
+ * -------------------------------------------------------------------------*/
+.widget, .card, .frappe-card, .dashboard-widget-box, .number-card, .shortcut-widget-box {
+  background-color: var(--card-bg) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--card-border-radius) !important;
+  box-shadow: var(--card-shadow) !important;
+  transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+}
+.widget:hover, .frappe-card:hover, .shortcut-widget-box:hover {
+  box-shadow: var(--ft-shadow-md) !important;
+  border-color: var(--ft-border-strong) !important;
+  transform: translateY(-1px);
+}
+.widget .widget-head .widget-title { color: var(--heading-color) !important; font-weight: 650; }
+.number-card .widget-content .number { color: var(--ft-primary) !important; font-weight: 700; }
+
+/* ---------------------------------------------------------------------------
+ * 07. FORMS — inputs, selects, pickers, validation and section headers.
+ * -------------------------------------------------------------------------*/
+.form-control, .input-with-feedback, select.form-control, textarea.form-control {
+  background-color: var(--ft-bg-surface) !important;
+  border: 1px solid var(--ft-border-strong) !important;
+  border-radius: var(--ft-radius-sm) !important;
+  color: var(--text-color) !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.form-control:hover { border-color: var(--ft-n-400) !important; }
+.form-control:focus, .input-with-feedback:focus {
+  border-color: var(--ft-primary) !important;
+  box-shadow: var(--ft-ring) !important;
+  outline: none !important;
+}
+.form-control::placeholder { color: var(--ft-n-400) !important; }
+.form-control[disabled], .form-control:disabled, .like-disabled-input {
+  background-color: var(--disabled-control-bg) !important;
+  color: var(--text-muted) !important;
+}
+.form-control.has-error, .has-error .form-control { border-color: var(--ft-danger) !important; background: var(--ft-danger-bg) !important; }
+.form-control.has-error:focus { box-shadow: 0 0 0 3px rgba(179, 38, 30, 0.2) !important; }
+.form-message.red, .invalid-feedback { color: var(--ft-danger-text) !important; }
+.section-head, .form-section .section-head {
+  color: var(--ft-n-600) !important;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+.form-section, .form-tabs-sticky-down { border-color: var(--border-color) !important; }
+.control-label { color: var(--ft-n-600) !important; font-weight: 500; }
+.datepicker, .datepicker--nav, .datepicker--cell {
+  background: var(--popover-bg) !important;
+  color: var(--text-color) !important;
+  border-radius: var(--ft-radius);
+}
+.datepicker--cell.-current- { color: var(--ft-primary) !important; font-weight: 700; }
+.datepicker--cell.-selected- { background: var(--ft-primary) !important; color: #fff !important; }
+.datepicker--cell:hover { background: var(--ft-primary-light) !important; }
+.checkbox .input-area input[type="checkbox"]:checked { accent-color: var(--ft-primary); }
+
+/* ---------------------------------------------------------------------------
+ * 08. DATATABLES — sticky-looking header, zebra rows, brand hover.
+ * -------------------------------------------------------------------------*/
+.datatable, .dt-scrollable { background: var(--ft-bg-surface) !important; }
+.dt-header, .dt-row-header, .datatable .dt-header .dt-cell {
+  background-color: var(--ft-n-100) !important;
+  color: var(--ft-n-700) !important;
+  font-weight: 650;
+  border-bottom: 1px solid var(--ft-border-strong) !important;
+}
+.dt-cell { border-color: var(--border-color) !important; }
+.dt-row:nth-child(even) .dt-cell { background-color: var(--ft-n-50) !important; }
+.dt-row:hover .dt-cell, .dt-cell--highlight { background-color: var(--ft-primary-light) !important; }
+.dt-cell--focus { border: 1px solid var(--ft-primary) !important; box-shadow: var(--ft-ring) !important; }
+.dt-toolbar { background: var(--ft-bg-surface) !important; border-bottom: 1px solid var(--border-color); }
+
+/* ---------------------------------------------------------------------------
+ * 09. BUTTONS — primary / secondary / default / link, all states.
+ * -------------------------------------------------------------------------*/
+.btn {
+  border-radius: var(--ft-radius-sm) !important;
+  font-weight: 600;
+  box-shadow: var(--btn-shadow);
+  transition: background-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+}
+.btn-primary, .btn.btn-primary {
+  background-color: var(--ft-primary) !important;
+  border-color: var(--ft-primary) !important;
+  color: var(--ft-primary-fg) !important;
+}
+.btn-primary:hover, .btn-primary:focus {
+  background-color: var(--ft-primary-hover) !important;
+  border-color: var(--ft-primary-hover) !important;
+  box-shadow: var(--ft-ring) !important;
+}
+.btn-primary:active { background-color: #0a2a53 !important; }
+.btn-secondary, .btn-info {
+  background-color: var(--ft-secondary) !important;
+  border-color: var(--ft-secondary) !important;
+  color: var(--ft-secondary-fg) !important;
+}
+.btn-secondary:hover { background-color: var(--ft-secondary-hover) !important; }
+.btn-default, .btn-light {
+  background-color: var(--ft-n-100) !important;
+  border: 1px solid var(--ft-border) !important;
+  color: var(--ft-n-800) !important;
+}
+.btn-default:hover { background-color: var(--ft-n-200) !important; }
+.btn-danger { background-color: var(--ft-danger) !important; border-color: var(--ft-danger) !important; color: #fff !important; }
+.btn-success { background-color: var(--ft-success) !important; border-color: var(--ft-success) !important; color: #fff !important; }
+.btn-link, a { color: var(--ft-primary) !important; }
+.btn-link:hover, a:hover { color: var(--ft-primary-hover) !important; }
+.btn:disabled, .btn.disabled { opacity: 0.55 !important; box-shadow: none !important; cursor: not-allowed; }
+.btn-xs { border-radius: 5px !important; }
+.btn-lg { border-radius: var(--ft-radius) !important; }
+
+/* ---------------------------------------------------------------------------
+ * 10. BADGES & INDICATOR PILLS — status vocabulary, light + solid variants.
+ * -------------------------------------------------------------------------*/
+.indicator-pill, .badge {
+  border-radius: 999px !important;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border: 1px solid transparent;
+}
+.indicator-pill.green, .badge.green, .indicator-pill.darkgrey.green { background: var(--ft-success-bg) !important; color: var(--ft-success-text) !important; border-color: rgba(30, 125, 70, 0.2); }
+.indicator-pill.orange, .indicator-pill.yellow, .badge.orange { background: var(--ft-warning-bg) !important; color: var(--ft-warning-text) !important; border-color: rgba(154, 98, 6, 0.2); }
+.indicator-pill.red, .badge.red { background: var(--ft-danger-bg) !important; color: var(--ft-danger-text) !important; border-color: rgba(179, 38, 30, 0.2); }
+.indicator-pill.blue, .badge.blue { background: var(--ft-info-bg) !important; color: var(--ft-info-text) !important; border-color: rgba(19, 98, 168, 0.2); }
+.indicator-pill.grey, .indicator-pill.gray { background: var(--ft-n-100) !important; color: var(--ft-n-700) !important; }
+.indicator-pill-solid.green { background: var(--ft-success) !important; color: #fff !important; }
+.indicator-pill-solid.red { background: var(--ft-danger) !important; color: #fff !important; }
+.indicator-pill-solid.blue { background: var(--ft-primary) !important; color: #fff !important; }
+
+/* ---------------------------------------------------------------------------
+ * 11. MODALS & POPOVERS — elevated surface, calm header/footer rails.
+ * -------------------------------------------------------------------------*/
+.modal-content {
+  background: var(--modal-bg) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--ft-radius-lg) !important;
+  box-shadow: var(--modal-shadow) !important;
+}
+.modal-header { border-bottom: 1px solid var(--border-color) !important; background: var(--ft-n-50) !important; border-radius: var(--ft-radius-lg) var(--ft-radius-lg) 0 0; }
+.modal-footer { border-top: 1px solid var(--border-color) !important; background: var(--ft-n-50) !important; }
+.modal-backdrop.show { opacity: 0.45; background: var(--ft-n-950); }
+.popover, .popover-body { background: var(--popover-bg) !important; border: 1px solid var(--border-color) !important; box-shadow: var(--ft-shadow-md) !important; border-radius: var(--ft-radius) !important; }
+
+/* ---------------------------------------------------------------------------
+ * 12. ALERTS & TOASTS — left status rail for instant scanability.
+ * -------------------------------------------------------------------------*/
+.alert { border-radius: var(--ft-radius) !important; border: 1px solid transparent; border-left-width: 4px !important; }
+.alert-success { background: var(--ft-success-bg) !important; color: var(--ft-success-text) !important; border-left-color: var(--ft-success) !important; }
+.alert-warning { background: var(--ft-warning-bg) !important; color: var(--ft-warning-text) !important; border-left-color: var(--ft-warning) !important; }
+.alert-danger  { background: var(--ft-danger-bg)  !important; color: var(--ft-danger-text)  !important; border-left-color: var(--ft-danger)  !important; }
+.alert-info    { background: var(--ft-info-bg)    !important; color: var(--ft-info-text)    !important; border-left-color: var(--ft-info)    !important; }
+#alert-container .desk-alert, .desk-alert {
+  background: var(--toast-bg) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--ft-radius) !important;
+  box-shadow: var(--ft-shadow-md) !important;
+}
+.desk-alert.green .alert-title-container { color: var(--ft-success-text) !important; }
+.desk-alert.red .alert-title-container { color: var(--ft-danger-text) !important; }
+
+/* ---------------------------------------------------------------------------
+ * 13. DROPDOWNS & AUTOCOMPLETE — consistent menu surface + brand hover.
+ * -------------------------------------------------------------------------*/
+.dropdown-menu {
+  background: var(--popover-bg) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--ft-radius) !important;
+  box-shadow: var(--ft-shadow-md) !important;
+  padding: 6px;
+}
+.dropdown-item, .dropdown-menu li > a { border-radius: var(--ft-radius-sm); color: var(--text-color) !important; }
+.dropdown-item:hover, .dropdown-item:focus { background: var(--ft-primary-light) !important; color: var(--ft-primary) !important; }
+.awesomplete > ul { background: var(--popover-bg) !important; border: 1px solid var(--border-color) !important; border-radius: var(--ft-radius) !important; box-shadow: var(--ft-shadow-md) !important; }
+.awesomplete > ul > li[aria-selected="true"], .awesomplete > ul > li:hover { background: var(--ft-primary-light) !important; color: var(--ft-primary) !important; }
+.awesomplete mark { background: var(--ft-warning-bg) !important; color: var(--ft-warning-text) !important; }
+
+/* ---------------------------------------------------------------------------
+ * 14. PROGRESS BARS & SKELETONS — brand fill, shimmering placeholders.
+ * -------------------------------------------------------------------------*/
+.progress { background-color: var(--ft-n-200) !important; border-radius: 999px !important; height: 8px; }
+.progress-bar { background: linear-gradient(90deg, var(--ft-primary), var(--ft-secondary)) !important; border-radius: 999px !important; }
+.progress-chart .progress-bar { background: var(--ft-primary) !important; }
+.skeleton-card, .skeleton, .widget.skeleton-card {
+  background: linear-gradient(90deg, var(--ft-n-100) 25%, var(--ft-n-200) 37%, var(--ft-n-100) 63%) !important;
+  background-size: 400% 100%;
+  animation: ft-shimmer 1.4s ease infinite;
+  border-radius: var(--ft-radius);
+}
+@keyframes ft-shimmer { 0% { background-position: 100% 0; } 100% { background-position: 0 0; } }
+
+/* ---------------------------------------------------------------------------
+ * 15. TIMELINE & ACTIVITY LOG — quieter rail, branded icon bubbles.
+ * -------------------------------------------------------------------------*/
+.new-timeline .timeline-items::before, .timeline-items .timeline-item::before { background-color: var(--border-color) !important; }
+.timeline-item .timeline-badge, .timeline-dot {
+  background: var(--ft-primary-light) !important;
+  border: 1px solid var(--ft-primary) !important;
+  color: var(--ft-primary) !important;
+}
+.timeline-content, .comment-content {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--ft-radius) !important;
+}
+.timeline-message-box .content { color: var(--text-color) !important; }
+.activity-message, .timeline-item .actions { color: var(--text-muted) !important; }
+
+/* ---------------------------------------------------------------------------
+ * 16. LIST VIEW & KANBAN — row rhythm preserved, only paint changes.
+ * -------------------------------------------------------------------------*/
+.list-row-container { border-bottom: 1px solid var(--border-color) !important; }
+.list-row-head, .list-row-head.text-muted {
+  background: var(--ft-n-100) !important;
+  color: var(--ft-n-700) !important;
+  font-weight: 650;
+  border-bottom: 1px solid var(--ft-border-strong) !important;
+}
+.list-row:hover, .list-row-container:hover { background-color: var(--ft-primary-light) !important; }
+.list-row-checkbox:checked { accent-color: var(--ft-primary); }
+.level-left .list-subject a { color: var(--ft-n-900) !important; font-weight: 600; }
+.kanban .kanban-column { background: var(--ft-n-100) !important; border-radius: var(--ft-radius-lg); border: 1px solid var(--border-color); }
+.kanban .kanban-card, .kanban-card.content {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--ft-radius) !important;
+  box-shadow: var(--ft-shadow-xs) !important;
+}
+.kanban .kanban-card:hover { box-shadow: var(--ft-shadow-md) !important; }
+.kanban-column .kanban-column-title { color: var(--ft-n-700) !important; font-weight: 650; }
+
+/* ---------------------------------------------------------------------------
+ * 17. DASHBOARD CHARTS & REPORT AREA — chart chrome matched to the palette.
+ * -------------------------------------------------------------------------*/
+.chart-container, .frappe-chart { background: var(--card-bg) !important; border-radius: var(--card-border-radius); }
+.frappe-chart .chart-label, .frappe-chart text { fill: var(--text-muted) !important; }
+.frappe-chart .axis line, .frappe-chart .chart-legend line, .frappe-chart line.multiaxis-y { stroke: var(--border-color) !important; }
+.graph-svg-tip.comparison, .graph-svg-tip {
+  background: var(--ft-n-900) !important;
+  border-radius: var(--ft-radius-sm) !important;
+  color: #fff;
+}
+.report-wrapper, .query-report, .report-summary {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--card-border-radius) !important;
+}
+.report-summary .summary-value { color: var(--ft-primary) !important; font-weight: 700; }
+
+/* ============================================================================
+ * 18. DARK MODE — purpose-built palette, not an inversion.
+ * ==========================================================================*/
+[data-theme="dark"] {
+  --ft-primary: #6aa9ee;
+  --ft-primary-hover: #8dc0f5;
+  --ft-primary-light: #16283d;
+  --ft-primary-fg: #08131f;
+  --ft-secondary: #8ab0d8;
+  --ft-secondary-hover: #a8c6e6;
+  --ft-secondary-light: #17263a;
+
+  --ft-success: #4cc38a; --ft-success-bg: #10281c; --ft-success-text: #7ee0ab;
+  --ft-warning: #e0a63a; --ft-warning-bg: #2b2110; --ft-warning-text: #f2c46b;
+  --ft-danger:  #f06a63; --ft-danger-bg:  #2d1513; --ft-danger-text:  #ff9a94;
+  --ft-info:    #6aa9ee; --ft-info-bg:    #12243a; --ft-info-text:    #9cc8f7;
+  --ft-appreciation: #4cc38a; --ft-appreciation-bg: #10281c; --ft-appreciation-text: #7ee0ab;
+  --ft-criticism:    #f06a63; --ft-criticism-bg:    #2d1513; --ft-criticism-text:    #ff9a94;
+
+  /* Surface hierarchy: canvas darkest, raised surfaces step lighter. */
+  --ft-n-0:   #0d1319;
+  --ft-n-50:  #121a22;
+  --ft-n-100: #18222c;
+  --ft-n-200: #1f2b37;
+  --ft-n-300: #2a3846;
+  --ft-n-400: #3b4c5d;
+  --ft-n-500: #7d8d9d;
+  --ft-n-600: #9aa9b8;
+  --ft-n-700: #bccad7;
+  --ft-n-800: #d9e2ea;
+  --ft-n-900: #f2f6fa;
+  --ft-n-950: #ffffff;
+
+  --ft-bg-canvas: #0d1319;
+  --ft-bg-surface: #131c24;
+  --ft-bg-raised: #18222c;
+  --ft-bg-sunken: #0a0f14;
+  --ft-border: #24313d;
+  --ft-border-strong: #334554;
+
+  --ft-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --ft-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.55);
+  --ft-shadow-md: 0 8px 20px rgba(0, 0, 0, 0.6);
+  --ft-shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.7);
+  --ft-ring: 0 0 0 3px rgba(106, 169, 238, 0.3);
+
+  /* Frappe bindings that need dark-specific values */
+  --primary: 106, 169, 238;
+  --bg-color: var(--ft-bg-canvas);
+  --fg-color: var(--ft-bg-surface);
+  --card-bg: var(--ft-bg-raised);
+  --modal-bg: var(--ft-bg-raised);
+  --popover-bg: var(--ft-bg-raised);
+  --toast-bg: var(--ft-bg-raised);
+  --control-bg: #1b2632;
+  --disabled-control-bg: #16202a;
+  --text-color: #d9e2ea;
+  --heading-color: #f2f6fa;
+  --text-muted: #8b9aa9;
+  --text-light: #6f7f8e;
+  --border-color: var(--ft-border);
+  --icon-stroke: #9aa9b8;
+  --btn-default-bg: #1e2a36;
+  --skeleton-bg: #1f2b37;
+}
+[data-theme="dark"] .navbar { background-color: #101922 !important; border-bottom-color: var(--ft-border) !important; }
+[data-theme="dark"] .navbar .nav-link, [data-theme="dark"] .navbar .navbar-brand { color: #d9e2ea !important; }
+[data-theme="dark"] .navbar .search-bar input { background: #18222c !important; border-color: var(--ft-border) !important; color: #d9e2ea !important; }
+[data-theme="dark"] .desk-sidebar .desk-sidebar-item.selected,
+[data-theme="dark"] .standard-sidebar-item.selected {
+  background: linear-gradient(90deg, #1d466f 0%, #24567f 100%) !important;
+  color: #f2f6fa !important;
+}
+[data-theme="dark"] .dt-row:nth-child(even) .dt-cell { background-color: #121a22 !important; }
+[data-theme="dark"] .modal-header, [data-theme="dark"] .modal-footer { background: #131c24 !important; }
+[data-theme="dark"] .skeleton-card, [data-theme="dark"] .skeleton {
+  background: linear-gradient(90deg, #18222c 25%, #24313d 37%, #18222c 63%) !important;
+  background-size: 400% 100%;
+}
+[data-theme="dark"] .graph-svg-tip { background: #24313d !important; }
+[data-theme="dark"] .navbar .navbar-brand img, [data-theme="dark"] .navbar .app-logo { filter: none; }
+
+/* ============================================================================
+ * 19. RTL / ARABIC LAYER — [dir="rtl"] base with component-scoped rules.
+ * ==========================================================================*/
+[dir="rtl"] body,
+[dir="rtl"] .btn,
+[dir="rtl"] .form-control,
+[dir="rtl"] .page-title,
+[dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4, [dir="rtl"] h5, [dir="rtl"] h6 {
+  font-family: var(--ft-font-arabic) !important;
+  letter-spacing: 0 !important; /* Arabic must never be letter-spaced */
+}
+[dir="rtl"] body { text-align: right; }
+[dir="rtl"] .text-left { text-align: right !important; }
+[dir="rtl"] .text-right { text-align: left !important; }
+
+/* Navbar */
+[dir="rtl"] .navbar .navbar-nav { flex-direction: row-reverse; }
+[dir="rtl"] .navbar .navbar-brand { margin-right: 0; margin-left: var(--margin-md); }
+[dir="rtl"] .navbar .search-bar input { padding-right: 12px; padding-left: 32px; }
+
+/* Sidebar */
+[dir="rtl"] .desk-sidebar, [dir="rtl"] .layout-side-section, [dir="rtl"] .standard-sidebar {
+  border-right: none !important;
+  border-left: 1px solid var(--border-color) !important;
+}
+[dir="rtl"] .desk-sidebar .desk-sidebar-item,
+[dir="rtl"] .standard-sidebar-item { flex-direction: row-reverse; text-align: right; }
+[dir="rtl"] .sidebar-item-icon { margin-right: 0; margin-left: 8px; }
+[dir="rtl"] .desk-sidebar .desk-sidebar-item.selected {
+  background: linear-gradient(270deg, var(--ft-primary) 0%, var(--ft-secondary) 100%) !important;
+}
+[dir="rtl"] .sidebar-toggle-btn svg { transform: scaleX(-1); }
+
+/* Forms & controls */
+[dir="rtl"] .form-control, [dir="rtl"] .input-with-feedback { text-align: right; }
+[dir="rtl"] .control-label, [dir="rtl"] .section-head { text-align: right; }
+[dir="rtl"] .form-group .help-box { margin-left: 0; margin-right: var(--margin-sm); }
+[dir="rtl"] .checkbox .label-area { margin-left: 0; margin-right: 6px; }
+[dir="rtl"] select.form-control {
+  background-position: left 0.6rem center !important;
+  padding-right: 0.75rem !important;
+  padding-left: 2rem !important;
+}
+
+/* Dropdowns & autocomplete */
+[dir="rtl"] .dropdown-menu { text-align: right; left: auto !important; right: 0 !important; }
+[dir="rtl"] .dropdown-toggle::after { margin-right: 0.4em; margin-left: 0; }
+[dir="rtl"] .awesomplete > ul { text-align: right; }
+
+/* Tables, lists, kanban */
+[dir="rtl"] .dt-cell, [dir="rtl"] .dt-header .dt-cell, [dir="rtl"] .list-row-col { text-align: right !important; }
+[dir="rtl"] .list-row-head, [dir="rtl"] .list-row { flex-direction: row-reverse; }
+[dir="rtl"] .kanban .kanban-column { direction: rtl; }
+
+/* Modals, alerts, timeline */
+[dir="rtl"] .modal-header .modal-title { text-align: right; }
+[dir="rtl"] .modal-footer { flex-direction: row-reverse; }
+[dir="rtl"] .alert { border-left-width: 1px !important; border-right-width: 4px !important; border-right-style: solid; }
+[dir="rtl"] .alert-success { border-right-color: var(--ft-success) !important; }
+[dir="rtl"] .alert-warning { border-right-color: var(--ft-warning) !important; }
+[dir="rtl"] .alert-danger  { border-right-color: var(--ft-danger)  !important; }
+[dir="rtl"] .alert-info    { border-right-color: var(--ft-info)    !important; }
+[dir="rtl"] .new-timeline .timeline-items::before { left: auto; right: 15px; }
+[dir="rtl"] .timeline-item { padding-left: 0; padding-right: 40px; }
+
+/* Date picker */
+[dir="rtl"] .datepicker { direction: rtl; }
+[dir="rtl"] .datepicker--nav-action[data-action="prev"] { transform: scaleX(-1); }
+[dir="rtl"] .datepicker--nav-action[data-action="next"] { transform: scaleX(-1); }
+
+/* Numeric fields stay LTR so currency and dates read correctly */
+[dir="rtl"] input[type="number"],
+[dir="rtl"] .dt-cell__content[data-fieldtype="Currency"],
+[dir="rtl"] .dt-cell__content[data-fieldtype="Float"],
+[dir="rtl"] .dt-cell__content[data-fieldtype="Int"] { direction: ltr; text-align: right; }
+
+/* Dark + RTL combined */
+[dir="rtl"][data-theme="dark"] .desk-sidebar .desk-sidebar-item.selected {
+  background: linear-gradient(270deg, #1d466f 0%, #24567f 100%) !important;
+}
+
+/* ---------------------------------------------------------------------------
+ * 20. ACCESSIBILITY & MOTION — visible focus, reduced-motion respect.
+ * -------------------------------------------------------------------------*/
+:focus-visible { outline: 2px solid var(--ft-primary) !important; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+/* End of theme */

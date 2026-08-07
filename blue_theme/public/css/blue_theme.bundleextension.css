@@ -1,0 +1,178 @@
+/* ══════════════════════════════════════════════════════════════════
+   MERIDIAN 3.0 — UX COMPANION SHEET (meridian-ux.css)
+   Styles ONLY for elements created/toggled by meridian-ux.js.
+   The main theme file (meridian.css) is never edited or overridden.
+   All values consume the theme's own --mr-* / Frappe tokens, so
+   light/dark and RTL behavior is inherited automatically.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── §2 · Keyboard layer ──────────────────────────────────────────
+   Focus rings only for keyboard users; pointer users keep a clean
+   canvas. (The theme's :focus-visible rule still applies — this
+   just suppresses stray :focus glow after mouse clicks.) */
+body:not(.mr-kb) button:focus:not(:focus-visible),
+body:not(.mr-kb) a:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+
+/* ── §4 · Reveal — quiet settle-in for workspace widgets ────────── */
+.mr-reveal {
+  opacity: 0;
+  transform: translateY(6px);
+}
+.mr-reveal.mr-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 380ms var(--mr-ease, cubic-bezier(0.22, 1, 0.36, 1)),
+    transform 380ms var(--mr-ease, cubic-bezier(0.22, 1, 0.36, 1));
+  transition-delay: var(--mr-reveal-delay, 0ms);
+}
+
+/* ── §5 · Page head scroll shadow + back-to-top ─────────────────── */
+.page-head.mr-scrolled {
+  box-shadow: var(--mr-shadow-sm, 0 1px 2px rgba(25, 25, 23, 0.05));
+}
+
+#mr-top-btn {
+  position: fixed;
+  inset-block-end: 24px;
+  inset-inline-end: 24px;
+  inline-size: 40px;
+  block-size: 40px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border-color, #e4e4df);
+  border-radius: var(--mr-radius-full, 9999px);
+  background: var(--card-bg, #fff);
+  color: var(--text-muted, #6c6c65);
+  box-shadow: var(--mr-shadow-md, 0 2px 4px rgba(25, 25, 23, 0.08));
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition:
+    opacity 190ms var(--mr-ease, ease),
+    transform 190ms var(--mr-ease, ease),
+    color 130ms,
+    border-color 130ms;
+  z-index: 1030;
+}
+#mr-top-btn.mr-visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+#mr-top-btn:hover {
+  color: var(--primary, #a83c7e);
+  border-color: var(--mr-accent-border, #eab9d7);
+}
+#mr-top-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--mr-focus, 0 0 0 3px rgba(168, 60, 126, 0.28));
+}
+
+/* ── §6a · Copy-document-ID button ──────────────────────────────── */
+.mr-copy-id {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 24px;
+  block-size: 24px;
+  margin-inline-start: 6px;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  border-radius: var(--mr-radius-xs, 4px);
+  background: transparent;
+  color: var(--text-light, #94948c);
+  cursor: pointer;
+  transition: color 130ms, background-color 130ms;
+}
+.mr-copy-id:hover {
+  color: var(--primary, #a83c7e);
+  background: var(--mr-accent-soft, #fbf1f7);
+}
+.mr-copy-id.mr-copied {
+  color: var(--mr-green-fg, #1a6234);
+}
+
+/* ── §6b · Dirty-form attention pulse on Save ───────────────────── */
+@keyframes mr-attn-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(168, 60, 126, 0.35); }
+  70%  { box-shadow: 0 0 0 7px rgba(168, 60, 126, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(168, 60, 126, 0); }
+}
+.mr-attn {
+  animation: mr-attn-pulse 1.6s var(--mr-ease, ease) 2;
+}
+
+/* ── §7 · Density toggle — compact ledger rhythm ────────────────── */
+.navbar .nav-link.mr-density {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+body.mr-compact .list-row {
+  padding-block: 4px;
+  min-block-size: 32px;
+}
+body.mr-compact .list-row-col,
+body.mr-compact .list-row .text-muted {
+  font-size: var(--mr-text-xs, 12px);
+}
+body.mr-compact .grid-row .grid-static-col {
+  padding-block: 3px;
+}
+body.mr-compact .datatable .dt-cell__content {
+  padding-block: 4px;
+}
+body.mr-compact .widget.number-widget-box,
+body.mr-compact .widget.shortcut-widget-box {
+  padding-block: 8px;
+}
+
+/* ── §8 · Alert auto-dismiss progress rail ──────────────────────── */
+.desk-alert {
+  position: relative;
+  overflow: hidden;
+}
+@keyframes mr-rail-drain {
+  from { inline-size: 100%; }
+  to   { inline-size: 0%; }
+}
+.mr-alert-rail {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  block-size: 2px;
+  background: var(--primary, #a83c7e);
+  opacity: 0.5;
+  animation: mr-rail-drain 5s linear forwards;
+  pointer-events: none;
+}
+
+/* ── Motion safety — mirrors the theme's §24 contract ───────────── */
+@media (prefers-reduced-motion: reduce) {
+  .mr-reveal,
+  .mr-reveal.mr-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .mr-attn { animation: none; }
+  .mr-alert-rail { display: none; }
+  #mr-top-btn { transition: none; }
+}
+
+/* ── Print safety — JS chrome never reaches paper ───────────────── */
+@media print {
+  #mr-top-btn,
+  .mr-copy-id,
+  .mr-alert-rail,
+  .nav-link.mr-density {
+    display: none !important;
+  }
+}
+

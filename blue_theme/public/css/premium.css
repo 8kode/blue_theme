@@ -1,0 +1,724 @@
+/* ============================================================
+   PREMIUM THEME for ERPNext v16 / Frappe v16
+   Update-safe: overrides Frappe's design-token layer first,
+   then applies low-specificity component polish.
+   Architecture:
+     01. Fonts
+     02. Design Tokens (light)
+     03. Design Tokens (dark)
+     04. Frappe Variable Bridge
+     05. Base & Typography
+     06. Navbar
+     07. Sidebar
+     08. Workspace
+     09. Buttons
+     10. Forms & Controls
+     11. Cards & Sections
+     12. List View
+     13. DataTable & Reports
+     14. Modals & Dialogs
+     15. Dropdowns & Menus
+     16. Indicators, Badges & Tags
+     17. Kanban, Calendar & Timeline
+     18. Scrollbars, Focus, Motion, Print
+   ============================================================ */
+
+/* ---- 01. FONTS ------------------------------------------------ */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap");
+
+/* ---- 02. DESIGN TOKENS — LIGHT -------------------------------- */
+:root {
+  /* Brand */
+  --pt-brand: #2456e6;
+  --pt-brand-strong: #1a44c2;
+  --pt-brand-soft: #eaf0fe;
+  --pt-brand-soft-2: #dbe6fd;
+
+  /* Neutrals — warm graphite scale */
+  --pt-ink: #16181d;
+  --pt-ink-2: #3d4149;
+  --pt-ink-3: #6b7078;
+  --pt-ink-4: #9ba0a8;
+  --pt-surface: #f7f7f5;
+  --pt-surface-2: #ffffff;
+  --pt-surface-3: #f0f0ee;
+  --pt-line: #e4e4e1;
+  --pt-line-strong: #d2d2cf;
+
+  /* Semantic accents */
+  --pt-success: #167a52;
+  --pt-success-soft: #e4f4ec;
+  --pt-warning: #a16207;
+  --pt-warning-soft: #fdf3df;
+  --pt-danger: #c2352f;
+  --pt-danger-soft: #fdebea;
+
+  /* Elevation */
+  --pt-shadow-xs: 0 1px 2px rgb(20 22 26 / 0.05);
+  --pt-shadow-sm: 0 1px 2px rgb(20 22 26 / 0.05), 0 2px 8px rgb(20 22 26 / 0.05);
+  --pt-shadow-md: 0 2px 4px rgb(20 22 26 / 0.05), 0 8px 24px rgb(20 22 26 / 0.08);
+  --pt-shadow-lg: 0 4px 8px rgb(20 22 26 / 0.06), 0 16px 48px rgb(20 22 26 / 0.14);
+
+  /* Shape */
+  --pt-radius-sm: 8px;
+  --pt-radius: 12px;
+  --pt-radius-lg: 16px;
+
+  /* Type */
+  --pt-font-sans: "Inter", "IBM Plex Sans Arabic", -apple-system, "Segoe UI", sans-serif;
+  --pt-font-mono: ui-monospace, "SF Mono", "Cascadia Code", monospace;
+
+  /* Motion */
+  --pt-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --pt-fast: 140ms;
+  --pt-med: 240ms;
+}
+
+/* ---- 03. DESIGN TOKENS — DARK (designed, not inverted) --------- */
+[data-theme="dark"],
+[data-theme-mode="dark"] {
+  --pt-brand: #6a94ff;
+  --pt-brand-strong: #85a8ff;
+  --pt-brand-soft: #1b2743;
+  --pt-brand-soft-2: #223259;
+
+  --pt-ink: #ecedef;
+  --pt-ink-2: #c3c6cc;
+  --pt-ink-3: #8f939b;
+  --pt-ink-4: #63676f;
+  --pt-surface: #101114;
+  --pt-surface-2: #191b1f;
+  --pt-surface-3: #212429;
+  --pt-line: #2a2d33;
+  --pt-line-strong: #383c43;
+
+  --pt-success: #4cc38a;
+  --pt-success-soft: #10281d;
+  --pt-warning: #e2b93b;
+  --pt-warning-soft: #2a2110;
+  --pt-danger: #f07470;
+  --pt-danger-soft: #331716;
+
+  --pt-shadow-xs: 0 1px 2px rgb(0 0 0 / 0.4);
+  --pt-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4), 0 2px 8px rgb(0 0 0 / 0.35);
+  --pt-shadow-md: 0 2px 4px rgb(0 0 0 / 0.4), 0 8px 24px rgb(0 0 0 / 0.45);
+  --pt-shadow-lg: 0 4px 8px rgb(0 0 0 / 0.5), 0 16px 48px rgb(0 0 0 / 0.6);
+}
+
+/* ---- 04. FRAPPE VARIABLE BRIDGE --------------------------------
+   Frappe's entire Desk reads from these variables. Overriding them
+   re-themes hundreds of components with zero specificity wars.     */
+:root,
+[data-theme="light"],
+[data-theme-mode="light"],
+[data-theme="dark"],
+[data-theme-mode="dark"] {
+  --font-stack: var(--pt-font-sans);
+
+  --primary: var(--pt-brand);
+  --primary-color: var(--pt-brand);
+  --btn-primary: var(--pt-brand);
+
+  --bg-color: var(--pt-surface);
+  --fg-color: var(--pt-surface-2);
+  --card-bg: var(--pt-surface-2);
+  --subtle-fg: var(--pt-surface-3);
+  --subtle-accent: var(--pt-surface-3);
+  --control-bg: var(--pt-surface-3);
+  --control-bg-on-gray: var(--pt-surface-2);
+  --disabled-control-bg: var(--pt-surface-3);
+  --modal-bg: var(--pt-surface-2);
+  --popover-bg: var(--pt-surface-2);
+  --navbar-bg: var(--pt-surface-2);
+  --sidebar-bg: var(--pt-surface);
+  --fg-hover-color: var(--pt-surface-3);
+  --highlight-color: var(--pt-brand-soft);
+  --awesomebar-focus-bg: var(--pt-surface-2);
+
+  --text-color: var(--pt-ink-2);
+  --heading-color: var(--pt-ink);
+  --text-muted: var(--pt-ink-3);
+  --text-light: var(--pt-ink-3);
+  --disabled-text-color: var(--pt-ink-4);
+  --text-on-primary: #ffffff;
+  --sidebar-text-color: var(--pt-ink-3);
+
+  --border-color: var(--pt-line);
+  --dark-border-color: var(--pt-line-strong);
+  --table-border-color: var(--pt-line);
+
+  --shadow-xs: var(--pt-shadow-xs);
+  --shadow-sm: var(--pt-shadow-sm);
+  --shadow-md: var(--pt-shadow-md);
+  --shadow-lg: var(--pt-shadow-lg);
+  --card-shadow: var(--pt-shadow-xs);
+  --modal-shadow: var(--pt-shadow-lg);
+
+  --border-radius: var(--pt-radius-sm);
+  --border-radius-md: var(--pt-radius);
+  --border-radius-lg: var(--pt-radius-lg);
+
+  --checkbox-color: var(--pt-brand);
+  --checkbox-focus-shadow: 0 0 0 3px var(--pt-brand-soft);
+  --scrollbar-thumb-color: var(--pt-line-strong);
+  --scrollbar-track-color: transparent;
+}
+
+/* ---- 05. BASE & TYPOGRAPHY ------------------------------------ */
+body {
+  font-family: var(--pt-font-sans);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--pt-ink-2);
+  background-color: var(--pt-surface);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+:lang(ar) body,
+[dir="rtl"] body {
+  font-family: "IBM Plex Sans Arabic", var(--pt-font-sans);
+  letter-spacing: 0;
+}
+
+h1, h2, h3, h4, h5, h6,
+.page-title .title-text,
+.head-title,
+.widget-title {
+  font-family: var(--pt-font-sans);
+  color: var(--pt-ink);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.page-title .title-text {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+a { transition: color var(--pt-fast) var(--pt-ease); }
+
+code, pre, .frappe-code { font-family: var(--pt-font-mono); }
+
+/* ---- 06. NAVBAR ------------------------------------------------ */
+header.navbar,
+.navbar {
+  background: color-mix(in srgb, var(--pt-surface-2) 85%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-block-end: 1px solid var(--pt-line);
+  box-shadow: none;
+  min-block-size: 52px;
+}
+
+.navbar .navbar-brand,
+.navbar .app-logo {
+  transition: opacity var(--pt-fast) var(--pt-ease);
+}
+.navbar .navbar-brand:hover { opacity: 0.8; }
+
+/* Awesomebar / global search as a command-palette field */
+#navbar-search,
+.search-bar .awesomplete input,
+input.form-control#navbar-search {
+  background: var(--pt-surface-3);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding-inline: 1rem;
+  transition:
+    background var(--pt-fast) var(--pt-ease),
+    border-color var(--pt-fast) var(--pt-ease),
+    box-shadow var(--pt-fast) var(--pt-ease);
+}
+#navbar-search:focus,
+.search-bar .awesomplete input:focus {
+  background: var(--pt-surface-2);
+  border-color: var(--pt-brand);
+  box-shadow: 0 0 0 3px var(--pt-brand-soft);
+  outline: none;
+}
+
+.navbar .nav-link,
+.navbar .btn-reset {
+  border-radius: var(--pt-radius-sm);
+  transition: background var(--pt-fast) var(--pt-ease);
+}
+.navbar .nav-link:hover { background: var(--pt-surface-3); }
+
+/* Breadcrumbs */
+#navbar-breadcrumbs a,
+.breadcrumb a {
+  color: var(--pt-ink-3);
+  font-weight: 500;
+}
+#navbar-breadcrumbs a:hover,
+.breadcrumb a:hover { color: var(--pt-brand); text-decoration: none; }
+
+/* ---- 07. SIDEBAR ----------------------------------------------- */
+.body-sidebar,
+.layout-side-section,
+.desk-sidebar {
+  background: var(--pt-surface);
+  border-inline-end: 1px solid var(--pt-line);
+}
+
+.sidebar-item-container .item-anchor,
+.desk-sidebar-item a,
+.sidebar-item-label {
+  color: var(--pt-ink-3);
+  font-weight: 500;
+  border-radius: var(--pt-radius-sm);
+  padding-block: 0.4rem;
+  padding-inline: 0.6rem;
+  transition:
+    background var(--pt-fast) var(--pt-ease),
+    color var(--pt-fast) var(--pt-ease),
+    transform var(--pt-fast) var(--pt-ease);
+}
+
+.sidebar-item-container .item-anchor:hover,
+.desk-sidebar-item a:hover {
+  background: var(--pt-surface-3);
+  color: var(--pt-ink);
+  text-decoration: none;
+}
+
+/* Active workspace item: brand pill + inline-start rail */
+.sidebar-item-container.selected > .desk-sidebar-item,
+.desk-sidebar-item.selected,
+.sidebar-item-container .item-anchor.active {
+  position: relative;
+  background: var(--pt-brand-soft);
+  color: var(--pt-brand);
+  border-radius: var(--pt-radius-sm);
+}
+.sidebar-item-container.selected > .desk-sidebar-item::before,
+.desk-sidebar-item.selected::before {
+  content: "";
+  position: absolute;
+  inset-block: 6px;
+  inset-inline-start: -0.5rem;
+  inline-size: 3px;
+  border-radius: 999px;
+  background: var(--pt-brand);
+}
+.desk-sidebar-item.selected .sidebar-item-label,
+.sidebar-item-container.selected .sidebar-item-label {
+  color: var(--pt-brand);
+  font-weight: 600;
+}
+
+/* Section headings inside sidebar */
+.sidebar-section-title,
+.standard-sidebar-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--pt-ink-4);
+  padding-block-start: 1rem;
+}
+
+/* ---- 08. WORKSPACE --------------------------------------------- */
+.codex-editor,
+.workspace-body { max-inline-size: 1240px; }
+
+/* Widget cards — number cards, shortcuts, charts, links */
+.widget {
+  background: var(--pt-surface-2);
+  border: 1px solid var(--pt-line);
+  border-radius: var(--pt-radius);
+  box-shadow: var(--pt-shadow-xs);
+  transition:
+    box-shadow var(--pt-med) var(--pt-ease),
+    border-color var(--pt-med) var(--pt-ease),
+    transform var(--pt-med) var(--pt-ease);
+}
+
+.widget.number-widget-box {
+  padding: 1.1rem 1.25rem;
+}
+.widget.number-widget-box:hover {
+  border-color: var(--pt-line-strong);
+  box-shadow: var(--pt-shadow-md);
+  transform: translateY(-2px);
+}
+.widget .widget-head .widget-label .widget-title {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--pt-ink-3);
+}
+.widget .widget-body .number,
+.number-widget-box .number {
+  font-size: 1.65rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--pt-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Shortcut cards */
+.widget.shortcut-widget-box {
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+}
+.widget.shortcut-widget-box:hover {
+  border-color: var(--pt-brand);
+  box-shadow: 0 0 0 3px var(--pt-brand-soft), var(--pt-shadow-sm);
+  transform: translateY(-1px);
+}
+.widget.shortcut-widget-box .widget-title {
+  font-weight: 600;
+  color: var(--pt-ink);
+}
+
+/* Chart widgets */
+.widget.dashboard-widget-box {
+  padding: 1.25rem;
+}
+.widget.dashboard-widget-box .widget-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--pt-ink);
+}
+
+/* Onboarding & links widgets */
+.widget.links-widget-box .link-item {
+  border-radius: var(--pt-radius-sm);
+  transition: background var(--pt-fast) var(--pt-ease);
+}
+.widget.links-widget-box .link-item:hover {
+  background: var(--pt-surface-3);
+  text-decoration: none;
+}
+
+/* ---- 09. BUTTONS ------------------------------------------------ */
+.btn {
+  font-weight: 550;
+  border-radius: var(--pt-radius-sm);
+  transition:
+    background var(--pt-fast) var(--pt-ease),
+    border-color var(--pt-fast) var(--pt-ease),
+    box-shadow var(--pt-fast) var(--pt-ease),
+    transform var(--pt-fast) var(--pt-ease);
+}
+.btn:active { transform: scale(0.98); }
+
+.btn-primary {
+  background: var(--pt-brand);
+  border-color: var(--pt-brand);
+  color: var(--text-on-primary);
+  box-shadow: var(--pt-shadow-xs), inset 0 1px 0 rgb(255 255 255 / 0.12);
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  background: var(--pt-brand-strong);
+  border-color: var(--pt-brand-strong);
+  color: var(--text-on-primary);
+}
+
+.btn-default,
+.btn-secondary {
+  background: var(--pt-surface-2);
+  border: 1px solid var(--pt-line-strong);
+  color: var(--pt-ink);
+  box-shadow: var(--pt-shadow-xs);
+}
+.btn-default:hover,
+.btn-secondary:hover {
+  background: var(--pt-surface-3);
+  border-color: var(--pt-line-strong);
+  color: var(--pt-ink);
+}
+
+.btn-danger {
+  background: var(--pt-danger);
+  border-color: var(--pt-danger);
+  color: #fff;
+}
+
+/* ---- 10. FORMS & CONTROLS --------------------------------------- */
+.form-control,
+input.input-with-feedback,
+select.form-control,
+textarea.form-control {
+  background: var(--pt-surface-3);
+  border: 1px solid transparent;
+  border-radius: var(--pt-radius-sm);
+  color: var(--pt-ink);
+  transition:
+    background var(--pt-fast) var(--pt-ease),
+    border-color var(--pt-fast) var(--pt-ease),
+    box-shadow var(--pt-fast) var(--pt-ease);
+}
+.form-control:focus,
+input.input-with-feedback:focus,
+textarea.form-control:focus {
+  background: var(--pt-surface-2);
+  border-color: var(--pt-brand);
+  box-shadow: 0 0 0 3px var(--pt-brand-soft);
+  outline: none;
+}
+
+.control-label,
+.frappe-control .label-area {
+  font-size: 0.75rem;
+  font-weight: 550;
+  color: var(--pt-ink-3);
+  letter-spacing: 0.01em;
+}
+
+.frappe-control .help-box { color: var(--pt-ink-4); }
+
+/* Section breaks inside forms */
+.form-section .section-head,
+.section-head {
+  font-weight: 600;
+  color: var(--pt-ink);
+  letter-spacing: -0.01em;
+}
+
+/* Checkboxes & switches */
+input[type="checkbox"] { accent-color: var(--pt-brand); }
+.switch input:checked + .slider { background-color: var(--pt-brand); }
+
+/* Like / assignment icons */
+.form-assignments .avatar,
+.avatar-frame {
+  border: 2px solid var(--pt-surface-2);
+  box-shadow: var(--pt-shadow-xs);
+}
+
+/* ---- 11. CARDS & SECTIONS --------------------------------------- */
+.frappe-card,
+.form-page,
+.page-form,
+.layout-main-section {
+  background: var(--pt-surface-2);
+  border: 1px solid var(--pt-line);
+  border-radius: var(--pt-radius);
+  box-shadow: var(--pt-shadow-xs);
+}
+
+.page-head {
+  background: transparent;
+  border: 0;
+}
+
+/* ---- 12. LIST VIEW ----------------------------------------------- */
+.list-row-container { border-block-end: 1px solid var(--pt-line); }
+.list-row,
+.list-row-head {
+  padding-block: 0.65rem;
+  transition: background var(--pt-fast) var(--pt-ease);
+}
+.list-row:hover { background: var(--pt-surface-3); }
+.list-row-head {
+  background: var(--pt-surface);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--pt-ink-4);
+}
+.list-subject a,
+.list-row .level-left a {
+  font-weight: 550;
+  color: var(--pt-ink);
+}
+.list-subject a:hover { color: var(--pt-brand); text-decoration: none; }
+
+.list-paging-area,
+.list-count { color: var(--pt-ink-4); }
+
+/* Filters bar */
+.filter-selector .btn,
+.tag-filters-area .btn { border-radius: 999px; }
+
+/* ---- 13. DATATABLE & REPORTS ------------------------------------- */
+.datatable {
+  --dt-border-color: var(--pt-line);
+  --dt-header-cell-bg: var(--pt-surface);
+  --dt-cell-bg: var(--pt-surface-2);
+  --dt-text-color: var(--pt-ink-2);
+  --dt-text-light: var(--pt-ink-4);
+  --dt-focus-border-width: 2px;
+  --dt-selection-highlight-color: var(--pt-brand-soft);
+  --dt-orange-highlight-color: var(--pt-warning-soft);
+  border-radius: var(--pt-radius);
+  overflow: hidden;
+  border: 1px solid var(--pt-line);
+}
+.dt-header .dt-cell {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--pt-ink-4);
+}
+.dt-cell { font-variant-numeric: tabular-nums; }
+.dt-row:hover .dt-cell { background: var(--pt-surface-3); }
+
+/* ---- 14. MODALS & DIALOGS ----------------------------------------- */
+.modal-backdrop.show { opacity: 0.4; }
+.modal-content {
+  background: var(--pt-surface-2);
+  border: 1px solid var(--pt-line);
+  border-radius: var(--pt-radius-lg);
+  box-shadow: var(--pt-shadow-lg);
+  animation: pt-modal-in var(--pt-med) var(--pt-ease);
+}
+@keyframes pt-modal-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.modal-header {
+  border-block-end: 1px solid var(--pt-line);
+  padding: 1rem 1.25rem;
+}
+.modal-title { font-weight: 650; color: var(--pt-ink); }
+.modal-footer { border-block-start: 1px solid var(--pt-line); }
+
+/* ---- 15. DROPDOWNS & MENUS ----------------------------------------- */
+.dropdown-menu {
+  background: var(--pt-surface-2);
+  border: 1px solid var(--pt-line);
+  border-radius: var(--pt-radius);
+  box-shadow: var(--pt-shadow-md);
+  padding: 0.35rem;
+  animation: pt-pop-in var(--pt-fast) var(--pt-ease);
+}
+@keyframes pt-pop-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.dropdown-item {
+  border-radius: var(--pt-radius-sm);
+  padding-block: 0.45rem;
+  color: var(--pt-ink-2);
+  transition: background var(--pt-fast) var(--pt-ease);
+}
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background: var(--pt-surface-3);
+  color: var(--pt-ink);
+}
+
+/* Awesomplete (search results) */
+.awesomplete > ul {
+  background: var(--pt-surface-2);
+  border: 1px solid var(--pt-line);
+  border-radius: var(--pt-radius);
+  box-shadow: var(--pt-shadow-md);
+}
+.awesomplete > ul > li[aria-selected="true"],
+.awesomplete > ul > li:hover {
+  background: var(--pt-brand-soft);
+  color: var(--pt-ink);
+}
+
+/* ---- 16. INDICATORS, BADGES & TAGS ---------------------------------- */
+.indicator-pill,
+.indicator-pill-round {
+  font-weight: 550;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  letter-spacing: 0.01em;
+}
+.indicator-pill.green, .indicator-pill.darkgreen {
+  background: var(--pt-success-soft); color: var(--pt-success);
+}
+.indicator-pill.orange, .indicator-pill.yellow {
+  background: var(--pt-warning-soft); color: var(--pt-warning);
+}
+.indicator-pill.red {
+  background: var(--pt-danger-soft); color: var(--pt-danger);
+}
+.indicator-pill.blue, .indicator-pill.lightblue {
+  background: var(--pt-brand-soft); color: var(--pt-brand);
+}
+.indicator-pill.gray, .indicator-pill.grey {
+  background: var(--pt-surface-3); color: var(--pt-ink-3);
+}
+
+/* ---- 17. KANBAN, CALENDAR & TIMELINE ---------------------------------- */
+.kanban-column {
+  background: var(--pt-surface);
+  border: 1px solid var(--pt-line);
+  border-radius: var(--pt-radius);
+}
+.kanban-card.frappe-card,
+.kanban-card {
+  border-radius: var(--pt-radius-sm);
+  box-shadow: var(--pt-shadow-xs);
+  transition: box-shadow var(--pt-fast) var(--pt-ease), transform var(--pt-fast) var(--pt-ease);
+}
+.kanban-card:hover { box-shadow: var(--pt-shadow-md); transform: translateY(-1px); }
+
+.fc .fc-daygrid-day.fc-day-today { background: var(--pt-brand-soft); }
+.fc .fc-button-primary { background: var(--pt-brand); border-color: var(--pt-brand); }
+
+/* Timeline / comments */
+.timeline-item .timeline-content {
+  background: var(--pt-surface-2);
+  border: 1px solid var(--pt-line);
+  border-radius: var(--pt-radius);
+}
+.comment-box .comment-input-container .ql-editor {
+  background: var(--pt-surface-3);
+  border-radius: var(--pt-radius-sm);
+}
+
+/* ---- 18. SCROLLBARS, FOCUS, MOTION, PRINT ------------------------------ */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--pt-line-strong) transparent;
+}
+*::-webkit-scrollbar { inline-size: 8px; block-size: 8px; }
+*::-webkit-scrollbar-thumb {
+  background: var(--pt-line-strong);
+  border-radius: 999px;
+}
+*::-webkit-scrollbar-thumb:hover { background: var(--pt-ink-4); }
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* Visible, consistent focus for keyboard users */
+:focus-visible {
+  outline: 2px solid var(--pt-brand);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skeletons & empty states */
+.skeleton, .placeholder-glow .placeholder {
+  background: linear-gradient(90deg, var(--pt-surface-3) 25%, var(--pt-line) 50%, var(--pt-surface-3) 75%);
+  background-size: 200% 100%;
+  animation: pt-shimmer 1.4s infinite;
+  border-radius: var(--pt-radius-sm);
+}
+@keyframes pt-shimmer {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+.msg-box, .no-result {
+  color: var(--pt-ink-3);
+}
+
+/* Reduced motion: disable all decorative animation */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print: clean, ink-friendly output */
+@media print {
+  body { background: #fff; color: #000; }
+  .widget, .frappe-card, .modal-content { box-shadow: none; border-color: #ddd; }
+  .navbar, .layout-side-section, .body-sidebar { display: none; }
+}

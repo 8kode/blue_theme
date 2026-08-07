@@ -10,12 +10,57 @@ app_logo_url = "/assets/blue_theme/images/splash.png"
 
 # Includes in <head>
 # ------------------
+app_include_css = ["/assets/blue_theme/css/fonts.css","blue_theme.bundle.css",
+                   "/assets/blue_theme/css/redmond.calendars.picker.css"]
+# web_include_css = ["/assets/blue_theme/css/fonts.css","blue_theme_web.bundle.css","meridian_login.css"]
 
-app_include_css = ["/assets/blue_theme/css/fonts.css","blue_theme.bundle.css","/assets/blue_theme/css/redmond.calendars.picker.css"]
-web_include_css = ["/assets/blue_theme/css/fonts.css","blue_theme_web.bundle.css"]
+web_include_css = [
+    "/assets/blue_theme/css/fonts.css",
+    "blue_theme_web.bundle.css",
+    # "/assets/blue_theme/css/meridian_login.css"
+]
+
+
+# # جافا سكربت للثيم
+# app_include_js = "/assets/blue_theme/js/meridian-ux-enhancements.js"
+# app_include_js = "/assets/blue_theme/js/meridian-workspace-sidebar.js"
+
+
+
+
+# Bundle into the Desk (authenticated app)
+# app_include_css = [
+#     "/assets/blue_theme/css/meridian.css",
+# ]
+# app_include_js = [
+#     "/assets/blue_theme/js/meridian.js",
+# ]
+
+# # Also bundle into public website pages
+# web_include_css = [
+#     "/assets/blue_theme/css/meridian.css",
+# ]
+# web_include_js = [
+#     "/assets/blue_theme/js/meridian.js",
+# ]
+
+
+
+
+#always comments
 # app_include_js=["blue_theme.bundle.js","/assets/blue_theme/js/tinymce/tinymce.js"]
-# app_include_js = "/assets/blue_theme/js/blue_theme_fix.js"
+# app_include_js = "/assets/blue_theme/js/app.js"
+#
+#newUpdate
+# Desk assets — injected on every Desk page, survives ERPNext updates
+# app_include_css = ["/assets/blue_theme/css/premium.css"]
+# app_include_js = ["/assets/blue_theme/js/premium.js"]
 
+# # Website / portal / login pages
+# web_include_css = ["/assets/blue_theme/css/premium.css"]
+# web_include_js = ["/assets/blue_theme/js/premium.js"]
+
+#endUpdate
 
 
 
